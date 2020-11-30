@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <form class="input-field col disabled ">
+            <p>Disclaimer! This website is to be used for only non copyright videos! Anything else may be illegal in your country.</p>
+            <p> Additionally, this website is in development, and it still has many bugs! If any are found feel free to report and explain the bug bellow. Thank you, and enjoy the website!</p>
+            <!-- <a class="waves-effect waves-light btn"><i class="material-icons left">create</i>Report Bug</a> -->
+            <a data-target="reportBugModal"class="waves-effect waves-light btn modal-trigger"
+                        id="reportBugBtn"><i class="material-icons left">create</i>Report Bug</a>
+                    <div id="reportBugModal" class="modal">
+                        <div class="modal-content">
+                            <h4>Report Bug</h4>
+                            <textarea id="reportBugTextArea" class="materialize-textarea"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat"
+                                onclick="reportBugBtnOnClick()">Report</a>
+                        </div>
+                    </div>
+        </form>
+        <form class="input-field col s3 m9 l6 disabled ">
+            <a class="waves-effect waves-light btn main-btn" id="addPlaylistBtn" onclick="addPlaylistBtnOnClick()">
+                <p class="flow-text">AddPlaylist</p>
+            </a>
+        </form>
+        
+        
+    </div>
+    <div class="row hidden" id="addPlaylistSubSector">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s4">
+                    <select onchange="platformBtnChanged()" id="platformBtn">
+                        <option value="" disabled selected>Choose your playlist's platform</option>
+                        <option value="0">Spotify</option>
+                        <option value="1">Youtube</option>
+                    </select>
+                </div>
+                <div class="input-field col s6 disabled">
+                    <a class="waves-effect waves-light btn" id="rotatePlatformSectionBtn"
+                        onclick="rotatePlatformSectionBtnOnClick()">button</a>
+                </div>
+            </div>
+        </form>
+        <form class="col s12 hidden" id="URLSector" onsubmit="return false">
+            <div class="row">
+                <div class="input-field col s4 disabled ">
+                    <input id="playlistURLText" type="text" pattern="" oninput="playlistURLTextOnInput()"
+                        onkeydown="playlistURLTextOnSubmit(event)">
+                    <label id="playlistURLLabel" for="playlistURLText">Playlist URL</label>
+                    <!-- <a class="waves-effect waves-light btn" style="align-items: right;" >button</a>   -->
+
+                </div>
+                <div class="input-field col s6 disabled">
+                    <a class="waves-effect waves-light btn" id="spotifyUserNameSearchBtn"
+                        onclick="spotifyUserNameSearchBtnOnClick()">Search for Username</a>
+
+                </div>
+            </div>
+        </form>
+        <form class="col s12 hidden" id="searchUserSector">
+            <div class="row">
+                <div class="input-field col s6 disabled ">
+                    <select onchange="playlistSelectOnChange()" id="playlistSelect">
+                        <option value="" disabled selected>Choose your playlist</option>
+
+                    </select>
+                </div>
+            </div>
+        </form>
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6 disabled">
+                    <a class="waves-effect waves-light btn disabled" id="loadPlaylistDataBtn"
+                        onclick="loadPlaylistDataBtnOnClick()">Submit Playlist Data</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row ">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6 disabled">
+                    <a class="waves-effect waves-light btn main-btn" id="addIndividualSongsBtn"
+                        onclick="addIndividualSongsBtnOnClick()">
+                        <p class="flow-text">Add Individual songs</p>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row hidden" id="addIndividualSongsSubSector">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s4 disabled">
+                    <select id="individualSongSelect" onchange="individualSongSelectOnChange()">
+                        <option value="" disabled selected>Song search type</option>
+                        <option value="Spotify">Spotify URL</option>
+                        <option value="Youtube">Youtube URL</option>
+                        <option value="None">Song Name</option>
+
+                    </select>
+                </div>
+            </div>
+        </form>
+        <form class="col s12">
+            <div class="row hidden" id="songSearchSector">
+
+                <div class="input-field col s3 disabled ">
+                    <input id="individualSongInput" type="text" pattern="" oninput="individualSongInputOnInput()">
+                    <label id="individualSongLabel" for="individualSongInput">Song URL</label>
+                    <!-- <a class="waves-effect waves-light btn" style="align-items: right;" >button</a>   -->
+                </div>
+                <div class="input-field col s1  disabled">
+                    <a class="waves-effect waves-light btn disabled" id="addSongBtn"
+                        onclick="addSongBtnOnClick()">Search Song
+                    </a>
+                </div>
+
+            </div>
+        </form>
+        <form class="col s12 m9 l6">
+            <table id="addSongTable" class="striped bordered hidden">
+                <thead>
+                    <tr>
+                        <th>Song Name</th>
+                        <th>Song Author</th>
+                        <th>Add Song</th>
+                    </tr>
+                </thead>
+                <tbody id="addSongTableBody">
+
+                </tbody>
+            </table>
+        </form>
+        <!-- <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6 disabled">
+                    <a class="waves-effect waves-light btn hidden" id="downloadSongsBtn"
+                        onclick="downloadSongsBtnOnClick()">Add Song</a>
+                </div>
+            </div>
+        </form> -->
+    </div>
+    <div class="row">
+        <form class="col s12">
+            <div class="row hidden" id = "downloadSector" >
+                <div class="col s3">
+                    <select id="qualitySelect" onchange="qualitySelectOnChange()">
+                        <option value="" disabled selected>Select Quality</option>
+                        <option value="Max">Max</option>
+                        <option value="Min">Min</option>
+                    </select>
+                    <a data-target="downloadSongsBtnModal"class="waves-effect waves-light btn modal-trigger disabled"
+                        id="downloadSongsBtn">Download Songs</a>
+                    <div id="downloadSongsBtnModal" class="modal">
+                        <div class="modal-content">
+                            <h4>Confirm Download</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat"
+                                onclick="downloadSongsBtnOnClick()">Continue</a>
+                        </div>
+                    </div>
+                    <a data-target="clearSongsBtnModal" class="waves-effect waves-light btn modal-trigger"
+                        id="clearSongsBtn">Clear Queue</a>
+                    <div id="clearSongsBtnModal" class="modal">
+                        <div class="modal-content">
+                            <h4>Confirm Clearing Queue</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat"
+                                onclick="clearSongsBtnOnClick()">Continue</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <form class="col s12 m9 l6">
+            <table id="songTable" class="striped bordered hidden">
+                <thead>
+                    <tr>
+                        <th>Song Name</th>
+                        <th>Song Author</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody id="songTableBody">
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <link rel="stylesheet" href="index.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io-stream.js"></script>  
+    <script src="index.js"></script>
+    <script src="Components/AddPlaylist.js"></script>
+    <script src="Components/addIndividualSongs.js"></script>
+    <script src="Components/SongTable.js"></script>
+    
+</body>
+
+</html>
