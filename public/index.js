@@ -37,9 +37,6 @@ youtubePlaylistRegex = /(https|http):\/\/(?:www\.)?youtube\.com\/watch\?(?:&.*)*
 
 spotifySongRegex = /[\bhttps://open.\b]*spotify[\b.com\b]*[/:]*track[/:]*[A-Za-z0-9?=]+/g
 youtubeSongRegex = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})?$/gm;
-console.log(songTableBody == null)
-var style = window.getComputedStyle(playlistURLText)
-console.log(style.getPropertyValue('display'))
 songBtnArray = [];
 addSongs = [];
 addSongBtnArray = [];
@@ -107,14 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
 //     }, 500);
 //   }, false);
 
-socket.on("youtubePlaylistData", data => {
-    console.log("data:")
-    console.log(data)
-})
-
-socket.on("test",(data)=>{
-    console.log("test! "+data)
-})
 
 //TODO make a search tbn for the songs
 //TODO make the download table a select button like the circle

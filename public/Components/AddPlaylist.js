@@ -7,7 +7,7 @@ function addPlaylistBtnOnClick() {
 }
 
 function platformBtnChanged() {
-    console.log("hello")
+    // console.log("hello")
     platform = platformBtn.value;
     loadPlatformSector(platform);
     playlistURLTextOnInput()
@@ -62,14 +62,13 @@ function loadPlatformSector(platform) {
 function loadPlaylistDataBtnOnClick() {
     if (CurrentDelayBetweenPlaylistRequests == 0) {
         type = (platformBtn.value == 0 ? (platformSectionState == 0?"spotifyLink":"spotifyUsername") : "youtube")
-        console.log(type);
+        
         if(type=="spotifyUsername"){
             socket.emit("requestPlaylistInfo", "spotifyLink", playlistSelect.value)
         }else{
             socket.emit("requestPlaylistInfo", type, playlistURLText.value)
         }
         
-        console.log("submit")
         loadPlaylistDataBtn.classList.add("disabled")
     }
     else{
@@ -85,9 +84,9 @@ function loadPlaylistDataBtnOnClick() {
 }
 
 function loadPlaylistsData(data,error){
-    console.log(data)
-    console.log("error")
-    console.log(error)
+    // console.log(data)
+    // console.log("error")
+    // console.log(error)
     if (error) {
         M.Toast.dismissAll();
         var toastHTML = 'Error! '+error;
@@ -98,7 +97,7 @@ function loadPlaylistsData(data,error){
             outDuration: 200
         })
     } else {
-        console.log(data)//TODO
+        // console.log(data)//TODO
 
     }
 }
@@ -119,9 +118,9 @@ function resetPlaylistDelay(){
 }
 
 function loadPlaylistData(data,error){
-    console.log(data)
-    console.log("error")
-    console.log(error)
+    // console.log(data)
+    // console.log("error")
+    // console.log(error)
     if (error) {
         M.Toast.dismissAll();
         var toastHTML = 'Error! '+error;
@@ -143,12 +142,12 @@ function loadPlaylistData(data,error){
                 else
                     songdata[i] = [data[i]["title"], data[i]["author"], data[i]["id"], data[i]["length"]]      
             }catch(Error){
-                console.log("Bruh")
+                // console.log("Bruh")
                 songdata[i] = null
             }
             // songdata[i] = new song()
         }
-        console.log("failed songs"+failedSongs)
+        // console.log("failed songs"+failedSongs)
         if(failedSongs.length != 0){
             M.Toast.dismissAll();
             M.toast({
@@ -167,8 +166,8 @@ function retryFailedSongs(){
 }
 
 socket.on("SpotifyLinkPlaylistInfo", (data, error) => {
-    console.log("recieved songs!")
-    console.log(data)
+    // console.log("recieved songs!")
+    // console.log(data)
     resetPlaylistDelay();
     loadPlaylistDataBtn.classList.remove("disabled")
 
@@ -181,27 +180,27 @@ socket.on("SpotifyLinkPlaylistInfo", (data, error) => {
     // tempImportant = tempImportant.map(e => {
     //     return e[0];
     // })
-    // console.log(tempImportant)
+    // // console.log(tempImportant)
     loadPlaylistData(data,error)
 })
 socket.on("YoutubePlaylistInfo", (data, error) => {
     resetPlaylistDelay();
     loadPlaylistDataBtn.classList.remove("disabled")
-    console.log(data)
+    // console.log(data)
     // data = JSON.parse(data)
     loadPlaylistData(data,error)
 })
 
 socket.on("searchForUsername", (data,error)=>{
     if (error) {
-        console.log("error from searchForUsername")
+        // console.log("error from searchForUsername")
         return 
     }
-    console.log(data)
+    // console.log(data)
     searchUserSector.style.display = "inline-block"
-    console.log(playlistSelect.options)
+    // console.log(playlistSelect.options)
     for (let i = 0; i < data.length; i++) {
-        console.log(i)
+        // console.log(i)
         playlistSelect.options[playlistSelect.options.length] = new Option(data[i]["name"], data[i]["uri"]);
     }
     M.FormSelect.init(playlistSelect, {});
@@ -210,7 +209,7 @@ socket.on("searchForUsername", (data,error)=>{
 function spotifyUserNameSearchBtnOnClick() {
     socket.emit("searchForUsername","spotifyUsername", playlistURLText.value )
     searchedForUser = 1;
-    // console.log("adasda")
+    // // console.log("adasda")
     // data = ["playlist 1", "playlist 12", "playlist 13", "playlist 41"]
     
 }
@@ -230,7 +229,7 @@ function playlistURLTextOnInput() {
         else
             loadPlaylistDataBtn.classList.add("disabled");
     } else {
-        console.log("2")
+        // console.log("2")
         playlistURLText.classList.remove("valid");
         playlistURLText.classList.add("invalid");
         loadPlaylistDataBtn.classList.add("disabled");
@@ -239,7 +238,7 @@ function playlistURLTextOnInput() {
 }
 
 function checkValidYoutubeLink(link) {
-    console.log(">?>>")
+    // console.log(">?>>")
     //refernece
     //https://www.youtube.com/watch?v=cvaIgq5j2Q8&list=RDcvaIgq5j2Q8
     var regExp = /^.*(youtu.be\/|list=)([^#\&\?]*).*/;
@@ -252,12 +251,12 @@ function checkValidYoutubeLink(link) {
 }
 
 function checkValidSpotifyLink(link) {
-    console.log("!!!!")
+    // console.log("!!!!")
     return link.replace(/https:\/\/open\.spotify\.com\/playlist\/[a-zA-z0-9=\+\-\?]+/g, "") == "" && link != ""
 }
 
 function playlistURLTextOnSubmit(e) {
-    // console.log(e)
+    // // console.log(e)
     if (e.keyCode == 13) {
 
     }

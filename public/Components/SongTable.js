@@ -129,8 +129,6 @@ function getVideoIds(){
             videoIds.push(Songs[i].videoId)
         }
     }
-    console.log(songBtnArray)
-    console.log(videoIds)
     return videoIds
 }
 
@@ -169,11 +167,9 @@ function downloadSongsBtnOnClick() {
 
 // checkValidity
 function addSongsToDownloadTable(data, doNotCheckForDuplicate = false) {
-    console.log("****************")
-    console.log(data)
     songNames = getSongNames()
     songAuthors = getSongAuthors()
-    console.log(songNames)
+
 
     dataSongAuthors = []
     dataSongNames = []
@@ -194,7 +190,6 @@ function addSongsToDownloadTable(data, doNotCheckForDuplicate = false) {
                 duplicateCount++;
                 data[dataSongNames.indexOf(songNames[i])] = null
             }
-            console.log(duplicateSongArray)
         }
         if (duplicateCount != 0) {
             M.Toast.dismissAll();
@@ -214,7 +209,6 @@ function addSongsToDownloadTable(data, doNotCheckForDuplicate = false) {
             tempSong = new song(data[i][0], data[i][1],data[i][2],data[i][3], songBtnIDcounter)
             Songs[songBtnIDcounter] = tempSong;
             songBtnArray[songBtnIDcounter] = false;
-            console.log(i)
             row = document.createElement("tr");
             songName = document.createElement("td");
             songName.innerHTML = data[i][0]
@@ -226,7 +220,6 @@ function addSongsToDownloadTable(data, doNotCheckForDuplicate = false) {
             songBtn.innerHTML = "Delete?"
             songBtn.style.backgroundColor = "grey"
             songBtn.addEventListener("click", (e) => {
-                console.log(e)
                 songBtnOnClick(e.toElement, e.toElement.id);
             })
             songBtn.id = "songBtn" + songBtnIDcounter;
@@ -235,7 +228,6 @@ function addSongsToDownloadTable(data, doNotCheckForDuplicate = false) {
             row.appendChild(songAuthor)
             row.appendChild(songBtn)
             row.id = "downloadSongRowID" + songBtnIDcounter
-            console.log(row.id)
             songTableBody.prepend(row)
             songBtnIDcounter++;
         }
@@ -248,15 +240,13 @@ function addSongsToDownloadTable(data, doNotCheckForDuplicate = false) {
 
 function songBtnOnClick(btn, btnID) {
     btnID = btnID.replace(/songBtn/g, "")
-    console.log(btn, btnID)
     if (songBtnArray[btnID]) {
         //add song to queue
         currentSongCount--;
         clearSongsBtn.innerHTML = `CLEAR QUEUE (${currentSongCount + (currentSongCount ==1? "SONG":"SONGS")})`
-        console.log("deleting " + "downloadSongRowID" + songBtnIDcounter)
+        
         row = document.getElementById("downloadSongRowID" + btnID)
         if (row == null) {
-            console.log("error")
             return
         }
         Songs[btnID].download = false;
@@ -301,19 +291,16 @@ function findSongIdwithVideoId(videoId){
 ss(socket).on('file', (stream, videoId) => {
     let id = findSongIdwithVideoId(videoId)
     if(id == -1){
-        console.log("error with video id of "+videoId)
         return
     }
     downloadStateArray[id] = 1;
     
-    console.log('received');
 
     stream.on('data', function (chunk) {
         bufferLengths[id] += chunk.length;
         buffers[id].push(chunk);
     });
     stream.on('end', function () {
-        console.log("finished")
         downloadStateArray[id] = 3;
         updateProgressBars()
         var filedata = new Uint8Array(bufferLengths[id]),

@@ -36,7 +36,6 @@ function individualSongInputOnInput() {
     }
 }
 socket.on("searchSong", data =>{
-    console.log(data)
     if(data.length!== undefined ){
         makeAddSongTable(data)
     }else{
@@ -95,7 +94,6 @@ function addSongTableBtnOnClick(btn, btnID) {
     // console.log("hi")
 
     btnID = btnID.replace(/addSongTableBtn/g, "")
-    console.log(btn, btnID)
     if (addSongBtnArray[btnID]) {
         //add song to queue
 
@@ -104,14 +102,12 @@ function addSongTableBtnOnClick(btn, btnID) {
         ])
         makeAddSongTable([])
         addSongTable.style.display = "none"
-        console.log("add Song")
         return
     } else {
         addSongBtnArray = [];
         for (let i = 0; i < addSongs.length; i++) {
             addSongBtnArray[i] = false;
             tempbtn = document.getElementById("addSongTableBtn" + i)
-            console.log(tempbtn)
             tempbtn.style.backgroundColor = "grey"
             tempbtn.innerHTML = "Add Song?"
         }
