@@ -21,9 +21,9 @@ const express = require('express'),
 currentSongsDownloading = 0;
 ffmpeg.setFfmpegPath(ffmpegPath);
 app.use('/', express.static(__dirname + '/public'))
-var PORT = 8080
-server.listen(PORT)
-console.log("listening on " + PORT + "...")
+// var PORT = 8080
+server.listen(process.env.PORT)
+// console.log("listening on " + PORT + "...")
 
 io.sockets.on('connection', socket => {
     console.log("connected")
