@@ -108,7 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
 //TODO make a search tbn for the songs
 //TODO make the download table a select button like the circle
 //then make 2 options: delete selected, delete all besides selected
-
+//TODO clear []byte after downloading song
+//TODO Progress bar
+//TODO make server less stressed
 function reportBugBtnOnClick(){
     socket.emit("logBug",reportBugTextArea.value)
     reportBugTextArea.value = ""

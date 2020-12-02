@@ -120,6 +120,8 @@ io.sockets.on('connection', socket => {
         }).catch(err =>{ console.log("Prtomis all errpr "+ err) });
     })
     socket.on("logBug", bugtext=>{
+        console.log("logging...")
+        console.log(bugtext)
         var dt = dateTime.create();
         var formatted = dt.format('Y-m-d H:M:S');   
         fs.appendFile('bugs.txt', formatted + " "+bugtext+"\n", function (err) {
