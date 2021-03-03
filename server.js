@@ -125,7 +125,10 @@ io.sockets.on('connection', socket => {
         var dt = dateTime.create();
         var formatted = dt.format('Y-m-d H:M:S');   
         fs.appendFile('bugs.txt', formatted + " "+bugtext+"\n", function (err) {
-            
+            console.log("error logging to file.")
+          });
+         fs.appendFile('problems.txt', formatted + " "+bugtext+"\n", function (err) {
+            console.log("error logging to file.2")
           });
     })
 })
